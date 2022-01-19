@@ -16,3 +16,20 @@ the user has in the called application.
 
 * Maven: 3.5.0+
 * Java: 11
+
+
+## Security
+
+### Example Token
+
+```
+{
+  "applicationName": "test-app",
+  "applicationRights": [
+  ],
+  "endOfValidity": "2022-12-31 23:59:59",
+  "userGlobalId": "TEST-USER",
+  "userName": "T.User",
+  "userToken": "TU"
+}
+```
