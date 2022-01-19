@@ -1,11 +1,13 @@
 package de.ollie.cube.core.model;
 
-import lombok.Getter;
+import lombok.Value;
 
-@Getter
+@Value
 public class UserAuthorizationSO {
 
-	private String name;
 	private UserLoginIdSO userLoginId;
+	private String name;
+	private String password;
+	private String token;
 
 }

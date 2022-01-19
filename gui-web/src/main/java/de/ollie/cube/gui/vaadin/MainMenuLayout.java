@@ -1,5 +1,8 @@
 package de.ollie.cube.gui.vaadin;
 
+import java.time.LocalDateTime;
+import java.util.Arrays;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -73,7 +76,20 @@ public class MainMenuLayout extends VerticalLayout implements BeforeEnterObserve
 	}
 
 	private void switchToShoppingList() {
-		getUI().ifPresent(ui -> ui.getPage().open(cubeConfiguration.getUrlShoppinglist() + "/shopping-list?jwt=" + jwtService.createJWT(, URL, URL, "shopping-list", null, List.of("SHOPPING-LIST-USER"))));
+		String url =
+				this.cubeConfiguration.getUrlShoppinglist() + "?jwt="
+						+ this.jwtService
+								.createJWT(
+										this.sessionData.getUserAuthorization().getName(),
+										this.sessionData.getUserAuthorization().getToken(),
+										this.sessionData.getUserAuthorization().getUserLoginId().getKey(),
+										"shopping-list",
+										LocalDateTime.now().plusMinutes(1L),
+										Arrays.asList("right1", "right2"));
+		LOGGER.info("calling: " + url);
+		this.getUI().ifPresent((ui) -> {
+			ui.getPage().open(url, "Shopping List");
+		});
 	}
 
 	private void updateUserOwnData() {
