@@ -3,7 +3,6 @@ package de.ollie.cube.core.service;
 import java.util.Optional;
 
 import de.ollie.cube.core.model.UserAuthorizationSO;
-import de.ollie.cube.core.model.UserLoginIdSO;
 
 /**
  * An interface for the user login and authentication.
@@ -27,6 +26,6 @@ public interface UserAuthorizationService {
 	 * @param userLoginId The user login id which the user authorization is to return for.
 	 * @return An optional with the user authorization data.
 	 */
-	Optional<UserAuthorizationSO> getUserAuthorization(UserLoginIdSO userLoginId);
-
+//	Optional<UserAuthorizationSO> getUserAuthorization(UserLoginIdSO userLoginId);
+// TODO OLI ^^^ Remove method header.
 }

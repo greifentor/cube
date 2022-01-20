@@ -5,9 +5,10 @@ import lombok.Value;
 @Value
 public class UserAuthorizationSO {
 
-	private UserLoginIdSO userLoginId;
+	private String globalId;
 	private String name;
 	private String password;
 	private String token;
+	private long userId;
 
 }

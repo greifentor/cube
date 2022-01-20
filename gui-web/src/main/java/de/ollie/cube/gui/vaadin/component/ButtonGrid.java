@@ -19,7 +19,7 @@ public class ButtonGrid extends VerticalLayout {
 		getStyle().set("-moz-border-radius", "4px");
 		getStyle().set("-webkit-border-radius", "4px");
 		getStyle().set("border-radius", "4px");
-		getStyle().set("border", "2px solid gray");
+		getStyle().set("border", "1px solid gray");
 		getStyle()
 				.set(
 						"box-shadow",

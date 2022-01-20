@@ -76,7 +76,7 @@ public class OwnUserDataDialog extends Dialog {
 		try {
 			if (isOldPasswordCorrect(user.getPassword()) && isNewPasswordEqualsItsRepeat()) {
 				user.setPassword(passwordEncoder.encode(passwordFieldNew.getValue()));
-				userService.update(user);
+				user = userService.update(user);
 				close();
 				observer.userChanged(user);
 			} else if (!isOldPasswordCorrect(user.getPassword())) {

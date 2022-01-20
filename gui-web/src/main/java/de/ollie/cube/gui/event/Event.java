@@ -3,7 +3,6 @@ package de.ollie.cube.gui.event;
 import java.util.HashMap;
 import java.util.Map;
 
-import de.ollie.cube.core.model.UserLoginIdSO;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +11,7 @@ import lombok.ToString;
 /**
  * A container for the event data.
  *
- * @author ollie (26.03.2020)
+ * @author ollie (20.01.2022)
  */
 @EqualsAndHashCode
 @Getter
@@ -31,24 +30,24 @@ public class Event {
 		this(type, id, null);
 	}
 
-	public Event(UserLoginIdSO userLoginId, EventType type) {
-		this(type, null, userLoginId);
+	public Event(Long userId, EventType type) {
+		this(type, null, userId);
 	}
 
-	public Event(EventType type, Object id, UserLoginIdSO userLoginId) {
+	public Event(EventType type, Object id, Long userId) {
 		super();
 		this.type = type;
 		setParameter("id", id);
-		setParameter("userLoginId", userLoginId);
+		setParameter("userId", userId);
 	}
 
 	public Object getParameter(String id) {
 		return parameters.get(id);
 	}
 
-	public boolean matchesUserLoginId(UserLoginIdSO userLoginId) {
-		UserLoginIdSO storedUserLoginId = (UserLoginIdSO) parameters.get("userLoginId");
-		return (storedUserLoginId == null) || (storedUserLoginId.equals(userLoginId));
+	public boolean matchesUserId(Long userId) {
+		Long storedUserId = (Long) parameters.get("userId");
+		return (storedUserId == null) || (storedUserId.equals(userId));
 	}
 
 	public Event setParameter(String key, Object value) {

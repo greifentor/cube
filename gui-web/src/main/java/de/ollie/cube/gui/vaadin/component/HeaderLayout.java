@@ -40,7 +40,7 @@ public class HeaderLayout extends HorizontalLayout {
 		layout.getStyle().set("-moz-border-radius", "4px");
 		layout.getStyle().set("-webkit-border-radius", "4px");
 		layout.getStyle().set("border-radius", "4px");
-		layout.getStyle().set("border", "2px solid gray");
+		layout.getStyle().set("border", "1px solid gray");
 		layout
 				.getStyle()
 				.set(

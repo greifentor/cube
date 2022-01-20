@@ -9,15 +9,17 @@ import javax.inject.Named;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 
+import de.ollie.cube.core.service.JWTService;
 import de.ollie.cube.core.service.configuration.JWTServiceConfiguration;
 import lombok.RequiredArgsConstructor;
 
 @Named
 @RequiredArgsConstructor
-public class JWTServiceImpl {
+public class JWTServiceImpl implements JWTService {
 
 	private final JWTServiceConfiguration configuration;
 
+	@Override
 	public String createJWT(String userName, String userToken, String userGlobalId, String applicationName,
 			LocalDateTime endOfValidity, List<String> applicationRights) {
 		Algorithm algorithm = Algorithm.HMAC512(configuration.getSecret());

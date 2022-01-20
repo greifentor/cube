@@ -77,7 +77,7 @@ public class UserLoginView extends VerticalLayout implements ComponentEventListe
 					if (eventManager != null) {
 						eventManager
 								.fireEvent(
-										new Event(userAuthorization.getUserLoginId(), EventType.LOGGED_IN)
+										new Event(userAuthorization.getUserId(), EventType.LOGGED_IN)
 												.setParameter("SessionId", sessionId));
 					}
 					loggedIn(userAuthorization);

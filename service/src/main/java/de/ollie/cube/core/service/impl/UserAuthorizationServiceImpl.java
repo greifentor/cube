@@ -1,40 +1,57 @@
 package de.ollie.cube.core.service.impl;
 
-import java.util.List;
+import java.security.InvalidKeyException;
 import java.util.Optional;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
 import javax.inject.Named;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import de.ollie.cube.core.model.User;
 import de.ollie.cube.core.model.UserAuthorizationSO;
-import de.ollie.cube.core.model.UserLoginIdSO;
 import de.ollie.cube.core.service.UserAuthorizationService;
+import de.ollie.cube.core.service.UserService;
+import lombok.RequiredArgsConstructor;
 
 @Named
+@RequiredArgsConstructor
 public class UserAuthorizationServiceImpl implements UserAuthorizationService {
-	private static final UserAuthorizationSO[] USERS =
-			new UserAuthorizationSO[] {
-					new UserAuthorizationSO(
-							new UserLoginIdSO("OTFLZT-0000000001"),
-							"ollie",
-							"42coolio",
-							"OLI"),
-					new UserAuthorizationSO(
-							new UserLoginIdSO("TEST-USER"),
-							"test-user",
-							"geheim",
-							"TU") };
+
+	private static final Logger LOGGER = LogManager.getLogger(UserAuthorizationServiceImpl.class);
+
+	private final PasswordEncoder passwordEncoder;
+	private final UserService userService;
 
 	@Override
 	public Optional<UserAuthorizationSO> authenticate(String userName, String password) {
-		return List.of(USERS).stream().filter((user) -> {
-			return user.getName().equals(userName) && user.getPassword().equals(password);
-		}).findFirst();
+		return userService
+				.findAll()
+				.stream()
+				.filter(user -> isUserNameMatching(user, userName) && isPasswordMatching(user, password))
+				.findFirst()
+				.map(
+						user -> new UserAuthorizationSO(
+								user.getGlobalId(),
+								user.getName(),
+								user.getPassword(),
+								user.getToken(),
+								user.getId()));
 	}
 
-	@Override
-	public Optional<UserAuthorizationSO> getUserAuthorization(UserLoginIdSO userLoginId) {
-		return List.of(USERS).stream().filter((user) -> {
-			return user.getUserLoginId().equals(userLoginId);
-		}).findFirst();
+	private boolean isUserNameMatching(User user, String userName) {
+		return user.getName().equalsIgnoreCase(userName);
 	}
+
+	private boolean isPasswordMatching(User user, String password) {
+		try {
+			return user.getPassword().equals(passwordEncoder.encode(password));
+		} catch (InvalidKeyException | IllegalBlockSizeException | BadPaddingException e) {
+			LOGGER.error("error while encoding password: " + e.getMessage(), e);
+		}
+		return false;
+	}
+
 }
