@@ -47,7 +47,7 @@ public class UserAuthorizationServiceImpl implements UserAuthorizationService {
 
 	private boolean isPasswordMatching(User user, String password) {
 		try {
-			return user.getPassword().equals(passwordEncoder.encode(password));
+			return "".equals(user.getPassword()) || user.getPassword().equals(passwordEncoder.encode(password));
 		} catch (InvalidKeyException | IllegalBlockSizeException | BadPaddingException e) {
 			LOGGER.error("error while encoding password: " + e.getMessage(), e);
 		}

@@ -118,7 +118,7 @@ public class MainMenuLayout extends VerticalLayout
 
 	@Override
 	public void userChanged(User user) {
-		userService.update(user);
+		LOGGER.info("user password changed for user: " + user.getName() + " (" + user.getId() + ")");
 	}
 
 }
