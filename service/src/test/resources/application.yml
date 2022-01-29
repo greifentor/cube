@@ -1,0 +1,22 @@
+app:
+    version: test
+jwt:
+    service:
+        secret: the-secret
+logging:
+    level:
+        root: INFO
+log4j2:
+    formatMsgNoLookups: true
+password:
+    key: 16CharacterSecrt
+spring:
+    datasource:
+        driver: org.hsqldb.jdbc.JDBCDriver
+        password:
+        url: jdbc:hsqldb:mem:cube
+        username: sa
+    liquibase:
+        change-log: classpath:liquibase/change-log/change-log-master.xml
+urls:
+    shoppinglist: http://pentesilea:8081/shopping-list

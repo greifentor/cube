@@ -39,8 +39,6 @@ public class ApplicationStartLayout extends VerticalLayout implements SessionOwn
 
 	@PostConstruct
 	void postConstruct() {
-		getStyle().set("background-image", "url(CubeCore-Background.png)");
-		setHeight("632px");
 		setMargin(false);
 		setWidthFull();
 		add(

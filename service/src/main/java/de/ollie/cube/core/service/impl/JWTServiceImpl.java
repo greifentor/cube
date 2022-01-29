@@ -21,14 +21,14 @@ public class JWTServiceImpl implements JWTService {
 
 	@Override
 	public String createJWT(String userName, String userToken, String userGlobalId, String applicationName,
-			LocalDateTime endOfValidity, List<String> applicationRights) {
+			LocalDateTime loginDate, List<String> applicationRights) {
 		Algorithm algorithm = Algorithm.HMAC512(configuration.getSecret());
 		return JWT
 				.create()
 				.withClaim("userToken", userToken)
 				.withArrayClaim("applicationRights", applicationRights.toArray(new String[applicationRights.size()]))
 				.withClaim("userGlobalId", userGlobalId)
-				.withClaim("endOfValidity", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(endOfValidity))
+				.withClaim("loginDate", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(loginDate))
 				.withClaim("userName", userName)
 				.withClaim("applicationName", applicationName)
 				.sign(algorithm);

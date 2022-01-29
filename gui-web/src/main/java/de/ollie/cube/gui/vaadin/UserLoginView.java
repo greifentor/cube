@@ -64,8 +64,18 @@ public class UserLoginView extends VerticalLayout implements ComponentEventListe
 		textFieldUserName.addKeyDownListener(this);
 		setWidthFull();
 		setMargin(false);
+		getStyle().set("background-image", "url(Cube-Background.png)");
+		getStyle().set("background-repeat", "no-repeat");
+		getStyle().set("background-position", "center center");
+		getStyle().set("-moz-border-radius", "4px");
+		getStyle().set("-webkit-border-radius", "4px");
+		getStyle().set("border-radius", "4px");
+		getStyle().set("border", "1px solid gray");
+		getStyle()
+				.set(
+						"box-shadow",
+						"10px 10px 20px #e4e4e4, -10px 10px 20px #e4e4e4, -10px -10px 20px #e4e4e4, 10px -10px 20px #e4e4e4");
 		Label labelVersion = new Label(appConfiguration.getName() + " (" + appConfiguration.getVersion() + ")");
-		labelVersion.setHeight("300px");
 		add(textFieldUserName, passwordFieldPassword, buttonLogin, labelVersion);
 	}
 

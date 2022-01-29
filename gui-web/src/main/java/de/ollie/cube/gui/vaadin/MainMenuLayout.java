@@ -66,23 +66,26 @@ public class MainMenuLayout extends VerticalLayout
 						.createButton(
 								resourceManager.getLocalizedString("main-menu.button.ownData.text", LocalizationSO.DE));
 		buttonUserOwnData.addClickListener(event -> updateUserOwnData());
-		buttonUserOwnData.setWidth("15%");
+		buttonUserOwnData.setWidth("20%");
 		VerticalLayout buttonLayout = new VerticalLayout();
 		buttonLayout.setMargin(false);
 		buttonLayout.setWidthFull();
 		ButtonGrid buttonGrid = new ButtonGrid(5, buttonShoppingList);
 		buttonGrid.setMargin(false);
 		buttonGrid.setWidthFull();
-		buttonLayout.add(buttonGrid);
+		// buttonLayout.add(buttonGrid);
 		setWidthFull();
 		setMargin(false);
+		getStyle().set("background-image", "url(Cube-Background.png)");
+		getStyle().set("background-repeat", "no-repeat");
+		getStyle().set("background-position", "center center");
 		add(
 				new HeaderLayout(
 						ButtonFactory.createLogoutButton(resourceManager, this::getUI, sessionData, LOGGER),
 						buttonUserOwnData,
 						resourceManager.getLocalizedString("commons.header.main-menu.label", LocalizationSO.DE),
-						HeaderLayoutMode.WRAPPED),
-				buttonLayout);
+						HeaderLayoutMode.PLAIN),
+				buttonGrid);
 		LOGGER.info("main menu view opened for user '{}'.", sessionData.getUserName());
 	}
 
