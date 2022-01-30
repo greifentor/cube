@@ -22,11 +22,10 @@ public class ButtonFactory {
 
 	public static Button createButton(String text) {
 		Button button = new Button(text)
-				.setBackgroundColor("white")
+				.setBackgroundColor("gainsboro")
 				.setBorder("solid 2px")
-				.setBorderColor("yellow")
-				.setColor("black")
-				.setBackgroundImage("gate.png");
+				.setBorderColor("#c0c0c0")
+				.setColor("black");
 		return button;
 	}
 

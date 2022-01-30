@@ -17,6 +17,7 @@ import de.ollie.cube.gui.SessionOwner;
 import de.ollie.cube.gui.event.Event;
 import de.ollie.cube.gui.event.EventManager;
 import de.ollie.cube.gui.event.EventType;
+import de.ollie.cube.gui.vaadin.component.ButtonFactory;
 import de.ollie.cube.gui.vaadin.component.PopupDialog;
 import de.ollie.cube.gui.vaadin.go.SessionIdGO;
 
@@ -52,7 +53,8 @@ public class UserLoginView extends VerticalLayout implements ComponentEventListe
 		this.sessionId = sessionId;
 		this.sessionOwner = sessionOwner;
 		this.userAuthorizationService = userAuthorizationService;
-		buttonLogin = new Button(resourceManager.getLocalizedString("UserLoginView.buttons.login.label"));
+		buttonLogin =
+				ButtonFactory.createButton(resourceManager.getLocalizedString("UserLoginView.buttons.login.label"));
 		buttonLogin.addClickListener(event -> tryLogin());
 		buttonLogin.setWidthFull();
 		passwordFieldPassword = new PasswordField(resourceManager.getLocalizedString("UserLoginView.password.label"));
