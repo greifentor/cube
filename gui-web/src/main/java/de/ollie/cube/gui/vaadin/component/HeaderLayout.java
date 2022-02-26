@@ -1,5 +1,7 @@
 package de.ollie.cube.gui.vaadin.component;
 
+import com.vaadin.flow.component.formlayout.FormLayout;
+import com.vaadin.flow.component.formlayout.FormLayout.ResponsiveStep;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 
@@ -50,21 +52,28 @@ public class HeaderLayout extends HorizontalLayout {
 
 	private HorizontalLayout getInnerLayout(Button buttonBack, Button buttonLogout, Button buttonUserData,
 			String labelText) {
-		HorizontalLayout headerInner = new HorizontalLayout();
+		FormLayout headerInner = new FormLayout();
 		headerInner.setWidthFull();
-		headerInner.setMargin(false);
+		headerInner
+				.setResponsiveSteps(
+						new ResponsiveStep("0px", 1),
+						new ResponsiveStep("960px", 2),
+						new ResponsiveStep("1440px", 3),
+						new ResponsiveStep("1920px", 4));
 		Label label = new Label(labelText);
 		label.setWidthFull();
 		label.getStyle().set("display", "flex");
 		label.getStyle().set("align-items", "center");
 		label.getStyle().set("font-weight", "bold");
-		buttonLogout.setWidth("15%");
 		if (buttonBack == null) {
-			headerInner.add((buttonUserData != null ? buttonUserData : new Label("")), label, buttonLogout);
+			headerInner.add(label, (buttonUserData != null ? buttonUserData : new Label("")), buttonLogout);
 		} else {
-			buttonBack.setWidth("15%");
-			headerInner.add((buttonUserData != null ? buttonUserData : new Label("")), label, buttonLogout, buttonBack);
+			headerInner.add(label, (buttonUserData != null ? buttonUserData : new Label("")), buttonLogout, buttonBack);
 		}
-		return headerInner;
+		headerInner.setColspan(label, 2);
+		HorizontalLayout layout = new HorizontalLayout(headerInner);
+		layout.setWidthFull();
+		layout.setMargin(false);
+		return layout;
 	}
 }

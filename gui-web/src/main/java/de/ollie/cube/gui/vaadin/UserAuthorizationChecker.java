@@ -15,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 public class UserAuthorizationChecker {
 
 	public void forwardToLoginOnNoUserSetForSession(SessionData sessionData, BeforeEnterEvent beforeEnterEvent) {
-		if (sessionData.getUserName() == null) {
+		if ((sessionData.getUserName() == null) || (sessionData.getUserAuthorization() == null)) {
 			log.info("no authorization forwarted to login page.");
 			beforeEnterEvent.forwardTo(ApplicationStartLayout.URL);
 		}

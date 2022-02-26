@@ -2,6 +2,8 @@ package de.ollie.cube.gui.vaadin;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -14,8 +16,10 @@ import com.vaadin.flow.router.HasUrlParameter;
 import com.vaadin.flow.router.OptionalParameter;
 import com.vaadin.flow.router.Route;
 
+import de.ollie.cube.core.model.Application;
 import de.ollie.cube.core.model.User;
 import de.ollie.cube.core.model.localization.LocalizationSO;
+import de.ollie.cube.core.service.ApplicationService;
 import de.ollie.cube.core.service.JWTService;
 import de.ollie.cube.core.service.UserService;
 import de.ollie.cube.core.service.impl.PasswordEncoder;
@@ -38,6 +42,7 @@ public class MainMenuLayout extends VerticalLayout
 
 	private static final Logger LOGGER = LogManager.getLogger(MainMenuLayout.class);
 
+	private final ApplicationService applicationService;
 	private final CubeConfiguration cubeConfiguration;
 	private final JWTService jwtService;
 	private final PasswordEncoder passwordEncoder;
@@ -54,13 +59,17 @@ public class MainMenuLayout extends VerticalLayout
 	public void beforeEnter(BeforeEnterEvent beforeEnterEvent) {
 		UserAuthorizationChecker.forwardToLoginOnNoUserSetForSession(sessionData, beforeEnterEvent);
 		LOGGER.info("created");
-		Button buttonShoppingList =
-				ButtonFactory
-						.createButton(
-								resourceManager
-										.getLocalizedString("main-menu.button.test-app.text", LocalizationSO.DE));
-		buttonShoppingList.addClickListener(event -> switchToShoppingList());
-		buttonShoppingList.setWidthFull();
+		List<Button> buttons =
+				applicationService
+						.findAllApplicationsByUserId(sessionData.getUserAuthorization().getUserId())
+						.stream()
+						.map(application -> {
+							Button button = ButtonFactory.createButton(application.getName());
+							button.addClickListener(event -> switchToApplication(application));
+							button.setWidthFull();
+							return button;
+						})
+						.collect(Collectors.toList());
 		Button buttonUserOwnData =
 				ButtonFactory
 						.createButton(
@@ -70,7 +79,7 @@ public class MainMenuLayout extends VerticalLayout
 		VerticalLayout buttonLayout = new VerticalLayout();
 		buttonLayout.setMargin(false);
 		buttonLayout.setWidthFull();
-		ButtonGrid buttonGrid = new ButtonGrid(5, buttonShoppingList);
+		ButtonGrid buttonGrid = new ButtonGrid(buttons.toArray(new Button[buttons.size()]));
 		buttonGrid.setMargin(false);
 		buttonGrid.setWidthFull();
 		// buttonLayout.add(buttonGrid);
@@ -89,20 +98,20 @@ public class MainMenuLayout extends VerticalLayout
 		LOGGER.info("main menu view opened for user '{}'.", sessionData.getUserName());
 	}
 
-	private void switchToShoppingList() {
+	private void switchToApplication(Application application) {
 		String url =
-				this.cubeConfiguration.getUrlShoppinglist() + "?jwt="
+				application.getBaseUrl() + "?jwt="
 						+ this.jwtService
 								.createJWT(
 										this.sessionData.getUserAuthorization().getName(),
 										this.sessionData.getUserAuthorization().getToken(),
 										this.sessionData.getUserAuthorization().getGlobalId(),
-										"shopping-list",
+										application.getGlobalId(),
 										LocalDateTime.now().plusMinutes(1L),
 										Arrays.asList("right1", "right2"));
 		LOGGER.info("calling: " + url);
 		this.getUI().ifPresent((ui) -> {
-			ui.getPage().open(url, "Shopping List");
+			ui.getPage().open(url, application.getName());
 		});
 	}
 

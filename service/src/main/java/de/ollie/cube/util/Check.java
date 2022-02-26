@@ -1,5 +1,7 @@
 package de.ollie.cube.util;
 
+import java.util.function.Supplier;
+
 /**
  * A utility class for checkers.
  *
@@ -23,6 +25,19 @@ public class Check {
 	public static void ensure(boolean condition, RuntimeException runtimeException) {
 		if (!condition) {
 			throw runtimeException;
+		}
+	}
+
+	/**
+	 * Checks if the passed condition is "true" or throws the passed exception.
+	 *
+	 * @param condition                The condition which is to check.
+	 * @param runtimeExceptionSupplier A supplier for the exception to throw.
+	 * @throws NullPointerException Passing a null value as exception supplier and a "false" condition.
+	 */
+	public static void ensure(boolean condition, Supplier<RuntimeException> runtimeExceptionSupplier) {
+		if (!condition) {
+			throw runtimeExceptionSupplier.get();
 		}
 	}
 

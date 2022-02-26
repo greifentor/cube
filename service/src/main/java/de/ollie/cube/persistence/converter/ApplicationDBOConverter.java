@@ -25,6 +25,7 @@ public class ApplicationDBOConverter implements ToModelConverter<Application, Ap
 		}
 		return new ApplicationDBO()
 				.setId(model.getId())
+				.setBaseUrl(model.getBaseUrl())
 				.setGlobalId(model.getGlobalId())
 				.setName(model.getName());
 	}
@@ -36,6 +37,7 @@ public class ApplicationDBOConverter implements ToModelConverter<Application, Ap
 		}
 		return new Application()
 				.setId(dbo.getId())
+				.setBaseUrl(dbo.getBaseUrl())
 				.setGlobalId(dbo.getGlobalId())
 				.setName(dbo.getName());
 	}

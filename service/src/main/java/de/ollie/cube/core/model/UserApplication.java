@@ -5,18 +5,16 @@ import lombok.Generated;
 import lombok.experimental.Accessors;
 
 /**
- * A model for applications.
+ * A model for user_applications.
  *
  * GENERATED CODE !!! DO NOT CHANGE !!!
  */
 @Accessors(chain = true)
 @Data
 @Generated
-public class Application {
+public class UserApplication {
 
-	private long id;
-	private String baseUrl;
-	private String globalId;
-	private String name;
+	private long application;
+	private long user;
 
 }

@@ -1,12 +1,14 @@
 package de.ollie.cube.core.service;
 
-import lombok.Generated;
+import java.util.List;
+
+import de.ollie.cube.core.model.Application;
 
 /**
  * A service interface for Application management.
- *
- * GENERATED CODE !!! DO NOT CHANGE !!!
  */
-@Generated
 public interface ApplicationService extends ApplicationGeneratedService {
+
+	List<Application> findAllApplicationsByUserId(Long userId);
+
 }

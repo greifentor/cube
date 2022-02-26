@@ -5,6 +5,9 @@
 			<column name="ID" type="BIGINT">
 				<constraints nullable="false" />
 			</column>
+			<column name="BASE_URL" type="VARCHAR(500)">
+				<constraints nullable="false" />
+			</column>
 			<column name="GLOBAL_ID" type="VARCHAR(50)">
 				<constraints nullable="false" />
 			</column>
@@ -13,6 +16,7 @@
 			</column>
 		</createTable>
 		<addPrimaryKey columnNames="ID" tableName="APPLICATION" />
+		<addAutoIncrement columnDataType="BIGINT" columnName="ID" startWith="1" tableName="APPLICATION" />
 		<createTable tableName="ACCESS_RIGHT">
 			<column name="DESCRIPTION" type="VARCHAR(500)">
 				<constraints nullable="false" />
@@ -28,6 +32,7 @@
 			</column>
 		</createTable>
 		<addPrimaryKey columnNames="ID" tableName="ACCESS_RIGHT" />
+		<addAutoIncrement columnDataType="BIGINT" columnName="ID" startWith="1" tableName="ACCESS_RIGHT" />
 		<createTable tableName="USER_APPLICATION">
 			<column name="APPLICATION" type="BIGINT">
 				<constraints nullable="false" />
