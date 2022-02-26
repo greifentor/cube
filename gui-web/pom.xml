@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>de.ollie</groupId>
 		<artifactId>cube</artifactId>
-		<version>1.3.0</version>
+		<version>1.4.0</version>
 	</parent>
 
 	<artifactId>cube-gui</artifactId>
@@ -172,7 +172,7 @@
 		<dependency>
 			<groupId>de.ollie</groupId>
 			<artifactId>cube-service</artifactId>
-			<version>1.3.0</version>
+			<version>1.4.0</version>
 		</dependency>
 	</dependencies>
 
