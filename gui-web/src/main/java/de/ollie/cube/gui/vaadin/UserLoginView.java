@@ -58,7 +58,7 @@ public class UserLoginView extends VerticalLayout {
 		passwordFieldPassword = new PasswordField(resourceManager.getLocalizedString("UserLoginView.password.label"));
 		passwordFieldPassword.setWidthFull();
 		passwordFieldPassword.addKeyDownListener(e -> onComponentEvent(e, tanCode));
-		textFieldTAN = new TextField(resourceManager.getLocalizedString("UserLoginView.pin.label"));
+		textFieldTAN = new TextField(resourceManager.getLocalizedString("UserLoginView.tan.label"));
 		textFieldTAN.setWidthFull();
 		textFieldTAN.addKeyDownListener(e -> onComponentEvent(e, tanCode));
 		textFieldUserName = new TextField(resourceManager.getLocalizedString("UserLoginView.userName.label"));
@@ -99,6 +99,7 @@ public class UserLoginView extends VerticalLayout {
 					PopupDialog
 							.showError(resourceManager.getLocalizedString("UserLoginView.Errors.InvalidLogin.label"));
 					passwordFieldPassword.setValue("");
+					textFieldTAN.setValue("");
 					textFieldUserName.focus();
 				});
 	}
@@ -108,8 +109,15 @@ public class UserLoginView extends VerticalLayout {
 			if (event.getSource() == passwordFieldPassword) {
 				textFieldTAN.focus();
 			} else if (event.getSource() == textFieldTAN) {
-				tanService.checkTAN(textFieldTAN.getValue(), tanCode, textFieldUserName.getValue());
-				tryLogin();
+				if (tanService.checkTAN(textFieldTAN.getValue(), tanCode, textFieldUserName.getValue())) {
+					tryLogin();
+				} else {
+					PopupDialog
+							.showError(resourceManager.getLocalizedString("UserLoginView.Errors.InvalidLogin.label"));
+					passwordFieldPassword.setValue("");
+					textFieldTAN.setValue("");
+					textFieldUserName.focus();
+				}
 			} else if (event.getSource() == textFieldUserName) {
 				passwordFieldPassword.focus();
 			}
