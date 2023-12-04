@@ -7,8 +7,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-import javax.annotation.PostConstruct;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +15,7 @@ import org.springframework.stereotype.Component;
 import de.ollie.cube.core.model.localization.LocalizationSO;
 import de.ollie.cube.core.service.AppConfiguration;
 import de.ollie.cube.core.service.localization.ResourceManager;
+import jakarta.annotation.PostConstruct;
 
 /**
  * An implementation for a file based resource manager.
@@ -39,10 +38,11 @@ public class FileBasedResourceManagerImpl implements ResourceManager {
 	private void postConstruct() {
 		logger.info("reading resources from: " + appConfiguration.getVersion());
 		for (LocalizationSO localization : LocalizationSO.values()) {
-			String fileName = configuration.getResourceFileName(localization).isEmpty()
-					? "classpath:localization/" + configuration.getFileNamePrefix() + "_resources_"
-							+ localization.name().toLowerCase() + ".properties"
-					: configuration.getResourceFileName(localization);
+			String fileName =
+					configuration.getResourceFileName(localization).isEmpty()
+							? "classpath:localization/" + configuration.getFileNamePrefix() + "_resources_"
+									+ localization.name().toLowerCase() + ".properties"
+							: configuration.getResourceFileName(localization);
 			Properties properties = new Properties();
 			logger.info("reading resources from: " + fileName);
 			if (fileName.startsWith("classpath:")) {

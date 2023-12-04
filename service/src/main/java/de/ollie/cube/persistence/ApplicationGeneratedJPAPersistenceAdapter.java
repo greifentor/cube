@@ -5,7 +5,6 @@ import static de.ollie.cube.util.Check.ensure;
 import java.util.List;
 import java.util.Optional;
 
-import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
 import de.ollie.cube.core.model.Application;
@@ -18,6 +17,7 @@ import de.ollie.cube.persistence.converter.PageConverter;
 import de.ollie.cube.persistence.converter.PageParametersToPageableConverter;
 import de.ollie.cube.persistence.entity.ApplicationDBO;
 import de.ollie.cube.persistence.repository.ApplicationDBORepository;
+import jakarta.annotation.PostConstruct;
 import lombok.Generated;
 
 /**
@@ -68,13 +68,22 @@ public abstract class ApplicationGeneratedJPAPersistenceAdapter implements Appli
 	public Application update(Application model) {
 		ensure(
 				model.getBaseUrl() != null,
-				() -> new NotNullConstraintViolationException("Application field baseUrl cannot be null.", "Application", "baseUrl"));
+				() -> new NotNullConstraintViolationException(
+						"Application field baseUrl cannot be null.",
+						"Application",
+						"baseUrl"));
 		ensure(
 				model.getGlobalId() != null,
-				() -> new NotNullConstraintViolationException("Application field globalId cannot be null.", "Application", "globalId"));
+				() -> new NotNullConstraintViolationException(
+						"Application field globalId cannot be null.",
+						"Application",
+						"globalId"));
 		ensure(
 				model.getName() != null,
-				() -> new NotNullConstraintViolationException("Application field name cannot be null.", "Application", "name"));
+				() -> new NotNullConstraintViolationException(
+						"Application field name cannot be null.",
+						"Application",
+						"name"));
 		return converter.toModel(repository.save(converter.toDBO(model)));
 	}
 

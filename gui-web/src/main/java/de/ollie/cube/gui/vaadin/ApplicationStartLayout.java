@@ -1,7 +1,5 @@
 package de.ollie.cube.gui.vaadin;
 
-import javax.annotation.PostConstruct;
-
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PreserveOnRefresh;
@@ -10,9 +8,11 @@ import com.vaadin.flow.spring.annotation.VaadinSessionScope;
 
 import de.ollie.cube.core.model.UserAuthorizationSO;
 import de.ollie.cube.core.service.AppConfiguration;
+import de.ollie.cube.core.service.TANService;
 import de.ollie.cube.core.service.UserAuthorizationService;
 import de.ollie.cube.core.service.localization.ResourceManager;
 import de.ollie.cube.gui.SessionOwner;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -36,6 +36,7 @@ public class ApplicationStartLayout extends VerticalLayout implements SessionOwn
 	private final ResourceManager resourceManager;
 	private final SessionData sessionData;
 	private final UserAuthorizationService userAuthorizationService;
+	private final TANService tanService;
 
 	@PostConstruct
 	void postConstruct() {
@@ -48,7 +49,8 @@ public class ApplicationStartLayout extends VerticalLayout implements SessionOwn
 						resourceManager,
 						this,
 						userAuthorizationService,
-						sessionData.getId()) {
+						sessionData.getId(),
+						tanService) {
 					@Override
 					public void loggedIn(UserAuthorizationSO userAuthorization) {
 						loggedInToApplication(userAuthorization);

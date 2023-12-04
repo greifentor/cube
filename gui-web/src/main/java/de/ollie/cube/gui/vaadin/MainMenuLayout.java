@@ -24,7 +24,6 @@ import de.ollie.cube.core.service.JWTService;
 import de.ollie.cube.core.service.UserService;
 import de.ollie.cube.core.service.impl.PasswordEncoder;
 import de.ollie.cube.core.service.localization.ResourceManager;
-import de.ollie.cube.gui.CubeConfiguration;
 import de.ollie.cube.gui.vaadin.OwnUserDataDialog.OwnUserDataDialogObserver;
 import de.ollie.cube.gui.vaadin.component.Button;
 import de.ollie.cube.gui.vaadin.component.ButtonFactory;
@@ -43,7 +42,6 @@ public class MainMenuLayout extends VerticalLayout
 	private static final Logger LOGGER = LogManager.getLogger(MainMenuLayout.class);
 
 	private final ApplicationService applicationService;
-	private final CubeConfiguration cubeConfiguration;
 	private final JWTService jwtService;
 	private final PasswordEncoder passwordEncoder;
 	private final ResourceManager resourceManager;

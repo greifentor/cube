@@ -3,7 +3,6 @@ package de.ollie.cube.persistence;
 import java.util.List;
 import java.util.Optional;
 
-import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
 import de.ollie.cube.core.model.Page;
@@ -15,6 +14,7 @@ import de.ollie.cube.persistence.converter.PageParametersToPageableConverter;
 import de.ollie.cube.persistence.converter.UserDBOConverter;
 import de.ollie.cube.persistence.entity.UserDBO;
 import de.ollie.cube.persistence.repository.UserDBORepository;
+import jakarta.annotation.PostConstruct;
 import lombok.Generated;
 
 /**

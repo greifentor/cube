@@ -19,4 +19,4 @@ spring:
     liquibase:
         change-log: classpath:liquibase/change-log/change-log-master.xml
 urls:
-    shoppinglist: http://pentesilea:8081/shopping-list
+    shoppinglist: http://localhost:8081/shopping-list

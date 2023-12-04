@@ -2,7 +2,6 @@ package de.ollie.cube.gui.vaadin.component;
 
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dialog.Dialog;
-import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
@@ -25,7 +24,8 @@ public class PopupDialog {
 		Label labelMessage = new Label(message);
 		VerticalLayout layout = new VerticalLayout();
 		layout.add(labelMessage, buttonConfirm);
-		layout.getStyle() //
+		layout
+				.getStyle() //
 				.set("color", "red") //
 		;
 		layout.setHorizontalComponentAlignment(Alignment.END, buttonConfirm);

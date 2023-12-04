@@ -1,7 +1,5 @@
 package de.ollie.cube.gui.vaadin;
 
-import javax.annotation.PostConstruct;
-
 import org.springframework.stereotype.Component;
 
 import com.vaadin.flow.spring.annotation.VaadinSessionScope;
@@ -9,6 +7,7 @@ import com.vaadin.flow.spring.annotation.VaadinSessionScope;
 import de.ollie.cube.core.model.UserAuthorizationSO;
 import de.ollie.cube.core.model.localization.LocalizationSO;
 import de.ollie.cube.gui.vaadin.go.SessionIdGO;
+import jakarta.annotation.PostConstruct;
 import lombok.Data;
 
 /**
