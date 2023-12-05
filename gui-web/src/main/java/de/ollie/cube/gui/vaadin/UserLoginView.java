@@ -29,11 +29,14 @@ import de.ollie.cube.gui.vaadin.go.SessionIdGO;
 public class UserLoginView extends VerticalLayout {
 
 	private Button buttonLogin;
+	private Label labelVersion;
 	private PasswordField passwordFieldPassword;
+	private String tanCode;
 	private TextField textFieldUserName;
 	private TextField textFieldTAN;
 	private SessionIdGO sessionId;
 
+	private final transient AppConfiguration appConfiguration;
 	private final transient EventManager eventManager;
 	private final transient ResourceManager resourceManager;
 	private final transient UserAuthorizationService userAuthorizationService;
@@ -44,27 +47,27 @@ public class UserLoginView extends VerticalLayout {
 			SessionOwner sessionOwner, UserAuthorizationService userAuthorizationService, SessionIdGO sessionId,
 			TANService tanService) {
 		super();
+		this.appConfiguration = appConfiguration;
 		this.eventManager = eventManager;
 		this.resourceManager = resourceManager;
 		this.sessionId = sessionId;
 		this.sessionOwner = sessionOwner;
 		this.userAuthorizationService = userAuthorizationService;
 		this.tanService = tanService;
-		String tanCode = tanService.createTANCode();
 		buttonLogin =
 				ButtonFactory.createButton(resourceManager.getLocalizedString("UserLoginView.buttons.login.label"));
 		buttonLogin.addClickListener(event -> tryLogin());
 		buttonLogin.setWidthFull();
 		passwordFieldPassword = new PasswordField(resourceManager.getLocalizedString("UserLoginView.password.label"));
 		passwordFieldPassword.setWidthFull();
-		passwordFieldPassword.addKeyDownListener(e -> onComponentEvent(e, tanCode));
+		passwordFieldPassword.addKeyDownListener(e -> onComponentEvent(e));
 		textFieldTAN = new TextField(resourceManager.getLocalizedString("UserLoginView.tan.label"));
 		textFieldTAN.setWidthFull();
-		textFieldTAN.addKeyDownListener(e -> onComponentEvent(e, tanCode));
+		textFieldTAN.addKeyDownListener(e -> onComponentEvent(e));
 		textFieldUserName = new TextField(resourceManager.getLocalizedString("UserLoginView.userName.label"));
 		textFieldUserName.setWidthFull();
 		textFieldUserName.setAutofocus(true);
-		textFieldUserName.addKeyDownListener(e -> onComponentEvent(e, tanCode));
+		textFieldUserName.addKeyDownListener(e -> onComponentEvent(e));
 		setWidthFull();
 		setMargin(false);
 		getStyle().set("background-image", "url(Cube-Background.png)");
@@ -78,8 +81,8 @@ public class UserLoginView extends VerticalLayout {
 				.set(
 						"box-shadow",
 						"10px 10px 20px #e4e4e4, -10px 10px 20px #e4e4e4, -10px -10px 20px #e4e4e4, 10px -10px 20px #e4e4e4");
-		Label labelVersion =
-				new Label(appConfiguration.getName() + " (" + appConfiguration.getVersion() + " - " + tanCode + ")");
+		labelVersion = new Label("");
+		setNewTanCode();
 		add(textFieldUserName, passwordFieldPassword, textFieldTAN, buttonLogin, labelVersion);
 	}
 
@@ -104,7 +107,7 @@ public class UserLoginView extends VerticalLayout {
 				});
 	}
 
-	public void onComponentEvent(KeyDownEvent event, String tanCode) {
+	public void onComponentEvent(KeyDownEvent event) {
 		if (event.getKey().getKeys().equals(Key.ENTER.getKeys())) {
 			if (event.getSource() == passwordFieldPassword) {
 				textFieldTAN.focus();
@@ -117,11 +120,17 @@ public class UserLoginView extends VerticalLayout {
 					passwordFieldPassword.setValue("");
 					textFieldTAN.setValue("");
 					textFieldUserName.focus();
+					setNewTanCode();
 				}
 			} else if (event.getSource() == textFieldUserName) {
 				passwordFieldPassword.focus();
 			}
 		}
+	}
+
+	private void setNewTanCode() {
+		tanCode = tanService.createTANCode();
+		labelVersion.setText(appConfiguration.getName() + " (" + appConfiguration.getVersion() + " - " + tanCode + ")");
 	}
 
 	public void loggedIn(UserAuthorizationSO userAuthorization) {
