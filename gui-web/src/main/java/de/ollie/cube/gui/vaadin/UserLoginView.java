@@ -87,24 +87,33 @@ public class UserLoginView extends VerticalLayout {
 	}
 
 	private void tryLogin() {
-		userAuthorizationService
-				.authenticate(textFieldUserName.getValue(), passwordFieldPassword.getValue())
-				.ifPresentOrElse(userAuthorization -> {
-					sessionOwner.setUserAuthorization(userAuthorization);
-					if (eventManager != null) {
-						eventManager
-								.fireEvent(
-										new Event(userAuthorization.getUserId(), EventType.LOGGED_IN)
-												.setParameter("SessionId", sessionId));
-					}
-					loggedIn(userAuthorization);
-				}, () -> {
-					PopupDialog
-							.showError(resourceManager.getLocalizedString("UserLoginView.Errors.InvalidLogin.label"));
-					passwordFieldPassword.setValue("");
-					textFieldTAN.setValue("");
-					textFieldUserName.focus();
-				});
+		if (tanService.checkTAN(textFieldTAN.getValue(), tanCode, textFieldUserName.getValue())) {
+			userAuthorizationService
+					.authenticate(textFieldUserName.getValue(), passwordFieldPassword.getValue())
+					.ifPresentOrElse(userAuthorization -> {
+						sessionOwner.setUserAuthorization(userAuthorization);
+						if (eventManager != null) {
+							eventManager
+									.fireEvent(
+											new Event(userAuthorization.getUserId(), EventType.LOGGED_IN)
+													.setParameter("SessionId", sessionId));
+						}
+						loggedIn(userAuthorization);
+					}, () -> {
+						PopupDialog
+								.showError(
+										resourceManager.getLocalizedString("UserLoginView.Errors.InvalidLogin.label"));
+						passwordFieldPassword.setValue("");
+						textFieldTAN.setValue("");
+						textFieldUserName.focus();
+					});
+		} else {
+			PopupDialog.showError(resourceManager.getLocalizedString("UserLoginView.Errors.InvalidLogin.label"));
+			passwordFieldPassword.setValue("");
+			textFieldTAN.setValue("");
+			textFieldUserName.focus();
+			setNewTanCode();
+		}
 	}
 
 	public void onComponentEvent(KeyDownEvent event) {
@@ -112,16 +121,7 @@ public class UserLoginView extends VerticalLayout {
 			if (event.getSource() == passwordFieldPassword) {
 				textFieldTAN.focus();
 			} else if (event.getSource() == textFieldTAN) {
-				if (tanService.checkTAN(textFieldTAN.getValue(), tanCode, textFieldUserName.getValue())) {
-					tryLogin();
-				} else {
-					PopupDialog
-							.showError(resourceManager.getLocalizedString("UserLoginView.Errors.InvalidLogin.label"));
-					passwordFieldPassword.setValue("");
-					textFieldTAN.setValue("");
-					textFieldUserName.focus();
-					setNewTanCode();
-				}
+				tryLogin();
 			} else if (event.getSource() == textFieldUserName) {
 				passwordFieldPassword.focus();
 			}

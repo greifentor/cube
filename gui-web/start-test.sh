@@ -1,1 +1,1 @@
-java -jar target/cube-gui-1.5.0.jar
+java -jar target/cube-gui-1.6.0.jar
