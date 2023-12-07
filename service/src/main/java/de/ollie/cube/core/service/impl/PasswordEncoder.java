@@ -3,7 +3,6 @@ package de.ollie.cube.core.service.impl;
 import java.security.InvalidKeyException;
 import java.security.Key;
 
-import javax.annotation.PostConstruct;
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
@@ -14,6 +13,8 @@ import javax.xml.bind.DatatypeConverter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
+
+import jakarta.annotation.PostConstruct;
 
 @Named
 public class PasswordEncoder {

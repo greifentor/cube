@@ -3,7 +3,7 @@
 A web application which manages the authentication and authorization for other cooperating applications.
 
 
-## What does it?
+## What does it do?
 
 The cube manages user and application data for related web applications. It provides a login dialog and a dashboard 
 which allows the user to jump into one of related applications.
@@ -14,8 +14,8 @@ the user has in the called application.
 
 ## Requirement
 
-* Maven: 3.5.0+
-* Java: 11
+* Maven: 3.5.4+
+* Java: 17
 
 
 ## Security
